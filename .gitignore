@@ -1,0 +1,10 @@
+/.ipynb_checkpoints
+/docs
+/trash
+/data
+/data_post_lemma_stop_removal
+all-the-news.db
+data.npy
+docIDs.npy
+SQL-to-TXT.ipynb
+trie.cpp
