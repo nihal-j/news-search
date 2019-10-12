@@ -8,4 +8,3 @@ data.npy
 docIDs.npy
 SQL-to-TXT.ipynb
 trie.cpp
-.gitignore
