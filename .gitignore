@@ -8,3 +8,4 @@ data.npy
 docIDs.npy
 SQL-to-TXT.ipynb
 trie.cpp
+test_file
