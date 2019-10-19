@@ -4,7 +4,8 @@ class Node:
         
         self.prefixes = 0
         self.words = 0
-        self.children = [None for i in range (256)]
+        # self.children = [None for i in range (128)]
+        self.children = {}
         
         
     def add(self, suffix, currentIndex):
@@ -16,7 +17,10 @@ class Node:
         else:
             self.prefixes = self.prefixes + 1
             firstChar = suffix[currentIndex]
-            if self.children[ord(firstChar)] == None:
+            # if self.children[ord(firstChar)] == None:
+            #     newNode = Node()
+            #     self.children[ord(firstChar)] = newNode
+            if ord(firstChar) not in self.children:
                 newNode = Node()
                 self.children[ord(firstChar)] = newNode
             currentIndex += 1
@@ -30,7 +34,9 @@ class Node:
         
         else:
             firstChar = suffix[currentIndex]
-            if self.children[ord(firstChar)] == None:
+            # if self.children[ord(firstChar)] == None:
+            #     return 0
+            if ord(firstChar) not in self.children:
                 return 0
             else:
                 currentIndex += 1
@@ -43,7 +49,9 @@ class Node:
         
         else:
             firstChar = suffix[currentIndex]
-            if self.children[ord(firstChar)] == None:
+            # if self.children[ord(firstChar)] == None:
+            #     return 0
+            if ord(firstChar) not in self.children == None:
                 return 0
             else:
                 currentIndex += 1
@@ -66,7 +74,10 @@ class CollectionNode(Node):
         else:
             self.prefixes = self.prefixes + 1
             firstChar = suffix[currentIndex]
-            if self.children[ord(firstChar)] == None:
+            # if self.children[ord(firstChar)] == None:
+            #     newNode = CollectionNode()
+            #     self.children[ord(firstChar)] = newNode
+            if ord(firstChar) not in self.children:
                 newNode = CollectionNode()
                 self.children[ord(firstChar)] = newNode
             currentIndex += 1
@@ -83,7 +94,10 @@ class CollectionNode(Node):
         else:
             self.prefixes = self.prefixes + 1
             firstChar = suffix[currentIndex]
-            if self.children[ord(firstChar)] == None:
+            # if self.children[ord(firstChar)] == None:
+            #     newNode = CollectionNode()
+            #     self.children[ord(firstChar)] = newNode
+            if ord(firstChar) not in self.children:
                 newNode = CollectionNode()
                 self.children[ord(firstChar)] = newNode
             currentIndex += 1
@@ -96,7 +110,9 @@ class CollectionNode(Node):
         
         else:
             firstChar = suffix[currentIndex]
-            if self.children[ord(firstChar)] == None:
+            # if self.children[ord(firstChar)] == None:
+            #     return []
+            if ord(firstChar) not in self.children == None:
                 return []
             else:
                 currentIndex += 1
@@ -109,7 +125,9 @@ class CollectionNode(Node):
         
         else:
             firstChar = suffix[currentIndex]
-            if self.children[ord(firstChar)] == None:
+            # if self.children[ord(firstChar)] == None:
+            #     return []
+            if ord(firstChar) not in self.children == None:
                 return []
             else:
                 currentIndex += 1
