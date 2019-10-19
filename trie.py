@@ -51,7 +51,7 @@ class Node:
             firstChar = suffix[currentIndex]
             # if self.children[ord(firstChar)] == None:
             #     return 0
-            if ord(firstChar) not in self.children == None:
+            if ord(firstChar) not in self.children:
                 return 0
             else:
                 currentIndex += 1
@@ -112,7 +112,7 @@ class CollectionNode(Node):
             firstChar = suffix[currentIndex]
             # if self.children[ord(firstChar)] == None:
             #     return []
-            if ord(firstChar) not in self.children == None:
+            if ord(firstChar) not in self.children:
                 return []
             else:
                 currentIndex += 1
@@ -127,7 +127,7 @@ class CollectionNode(Node):
             firstChar = suffix[currentIndex]
             # if self.children[ord(firstChar)] == None:
             #     return []
-            if ord(firstChar) not in self.children == None:
+            if ord(firstChar) not in self.children:
                 return []
             else:
                 currentIndex += 1
