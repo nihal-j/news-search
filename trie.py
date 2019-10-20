@@ -7,9 +7,10 @@ class Node:
         # self.children = [None for i in range (128)]
         self.children = {}
         
-        
     def add(self, suffix, currentIndex):
-        
+
+        '''Adds suffix[currenIndex : ] to self'''
+
         if currentIndex == len(suffix):
             self.words = self.words + 1
             self.prefixes = self.prefixes + 1
@@ -28,6 +29,8 @@ class Node:
                 
     
     def count_words(self, suffix, currentIndex):
+
+        '''Returns the count of words ending with suffix[currentIndex]'''
         
         if currentIndex == len(suffix):
             return self.words
@@ -43,6 +46,8 @@ class Node:
                 return self.children[ord(firstChar)].count_words(suffix, currentIndex)
             
     def count_prefixes(self, suffix, currentIndex):
+
+        '''Returns the count of prefixes ending with suffix[currentIndex]'''
         
         if currentIndex == len(suffix):
             return self.prefixes
@@ -66,6 +71,9 @@ class CollectionNode(Node):
 
     def add_title(self, suffix, currentIndex, docID):
 
+        '''Adds suffix[currenIndex : ] to self and appends docID to self.titles
+        at the end of suffix'''
+
         if currentIndex == len(suffix):
             self.words = self.words + 1
             self.prefixes = self.prefixes + 1
@@ -85,6 +93,8 @@ class CollectionNode(Node):
 
         
     def add_document(self, suffix, currentIndex, docID):
+
+        '''Adds docID to self.documents at the end of suffix'''
         
         if currentIndex == len(suffix):
             self.words = self.words + 1
@@ -104,6 +114,8 @@ class CollectionNode(Node):
             self.children[ord(firstChar)].add_document(suffix, currentIndex, docID)
             
     def get_doc_list(self, suffix, currentIndex):
+
+        '''Returns list of documents containing suffix'''
         
         if currentIndex == len(suffix):
             return self.documents
@@ -119,6 +131,8 @@ class CollectionNode(Node):
                 return self.children[ord(firstChar)].get_doc_list(suffix, currentIndex)
 
     def get_title_list(self, suffix, currentIndex):
+
+        '''Returns list of titles that contain suffix'''
         
         if currentIndex == len(suffix):
             return self.titles
