@@ -233,13 +233,16 @@ def calculate_scores(collection, documentRoot, max_tf, tf_query, final_query):
 
     factor = {}
 
+    # stores a list of docIDs of the documents presented to the user
+    retrieved_docs = []
+
     for query_term in tf_query:
 
         docs_having_query_term = collection.get_doc_list(query_term, 0)
         df = len(docs_having_query_term)
         idf = 0
 
-        print('-------------------------------------')
+        print('----------------------------------------------------------------------------------------')
         print('Term in query = ', query_term)
         print()
 
@@ -292,12 +295,13 @@ def calculate_scores(collection, documentRoot, max_tf, tf_query, final_query):
     maxshow = min(10, len(scores))
 
     print('\n\n')
-    print('============================================')
+    print('========================================================================================')
 
     for i in range(maxshow):
 
         print()
         docID = sorted_scores[i][0]
+        retrieved_docs.append(docID)
         print('doc ID = ', docID)
         cnt = 0
         print('Keywords:', end = ' ')
@@ -358,8 +362,9 @@ def calculate_scores(collection, documentRoot, max_tf, tf_query, final_query):
         print('\n')
         print('tf-idf score=', sorted_scores[i][1])
         print('\n')
-        print('============================================')
+        print('========================================================================================')
 
+    return retrieved_docs
 
 # In[14]:
 
@@ -376,6 +381,7 @@ if __name__ == '__main__':
 
     print('Loading data...', end = '')
     data = np.load("mod_data.npy", allow_pickle = True)
+    
     print('Done.')
 
     for i in range(0, len(data)) :
@@ -394,10 +400,56 @@ if __name__ == '__main__':
         max_tf = pickle.load(handle)
     print('Done')
     
-    while 1:
-	    query = input('Search: ')
-	    if query == '-1':
-	    	break
-	    tf_query, final_query = preprocess_query(query)
-	    calculate_scores(collection, documentRoot, max_tf, tf_query, final_query)
-	    print()
+    user_input = "1"
+
+    while user_input == str(1):
+
+        print('\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+        query = input('Enter search query\n')
+        tf_query, final_query = preprocess_query(query)
+        retrieved_docs = calculate_scores(collection, documentRoot, max_tf, tf_query, final_query)
+
+        print('\n\nTo view a specific document, enter 2. \nTo search for a new query, enter 1.\nTo exit, enter 0.')
+        user_input = input('\n')
+        
+        while user_input != str(0) and user_input != str(1) and user_input !=str(2) :
+
+                user_input=input('\nWrong input. Please re-enter your choice (0,1,2):\n')
+
+        while user_input == str(2):
+
+            while True:
+                try:
+                    docID_user = input('\nEnter the document ID of the document you wish to view:\n')
+                    x = int(docID_user)
+
+                except ValueError:
+                    print('\nInvalid input. Please enter a numeric value.')
+                    continue
+# 
+                break
+
+            while int(docID_user) not in retrieved_docs:
+
+                print("\nWrong document ID. Please choose a document ID from among the following:\n")
+                for docID in retrieved_docs:
+                    print(docID, end=' ')
+                print()
+                docID_user = input('\nEnter document ID:\n')
+
+            print('\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            print()
+            print(data[get_index[int(docID_user)]][1])
+            print()
+            print(data[get_index[int(docID_user)]][4])
+            print()
+            print('\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+            print('\nTo view another document, enter 2.\nTo search for a new query, enter 1.\nTo exit, enter 0.')
+            user_input = input('\n')
+
+            while user_input != str(0) and user_input != str(1) and user_input != str(2) :
+
+                user_input=input('\nWrong input. Please re-enter your choice (0,1,2):\n')
+
